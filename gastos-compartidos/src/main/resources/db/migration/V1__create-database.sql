@@ -38,6 +38,7 @@ CREATE TABLE `expenses` (
 CREATE TABLE `user_group` (
                               `user_id` bigint(20) NOT NULL,
                               `group_id` bigint(20) NOT NULL,
+                              PRIMARY KEY (`user_id`, `group_id`),
                               CONSTRAINT `fk7k9ade3lqbo483u9vuryxmm34` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
                               CONSTRAINT `fkbegtgnl3oq004958pisko4fu4` FOREIGN KEY (`group_id`) REFERENCES `group_expenses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
