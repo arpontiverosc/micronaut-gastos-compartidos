@@ -1,18 +1,25 @@
-## Micronaut 2.3.3 Documentation
+# autentia_gastos_compartidos
 
-- [User Guide](https://docs.micronaut.io/2.3.3/guide/index.html)
-- [API Reference](https://docs.micronaut.io/2.3.3/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/2.3.3/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+Prueba Técnica - Req Funcionales
 
-## Feature http-client documentation
+Gastos compartidos
 
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+Se debe construir una aplicación que cumpla con los siguientes requisitos funcionales:
 
-## Feature lombok documentation
+● Como usuario, quiero acceder al grupo de gastos compartidos de mi grupo de amigos. Para cada gasto quiero visualizar la siguiente información:
 
-- [Micronaut Project Lombok documentation](https://docs.micronaut.io/latest/guide/index.html#lombok)
+○ Persona que realizó el pago
 
-- [https://projectlombok.org/features/all](https://projectlombok.org/features/all)
+○ Importe del pago
 
+○ Descripción del pago.
+
+○ Fecha del pago
+
+El listado debe estar ordenado por el último pago realizado.
+
+● Como usuario, quiero añadir una persona a mi grupo de amigos.
+
+● Como usuario, quiero añadir un gasto.
+
+● Como usuario, quiero un balance para saber cuánto dinero tiene que pagar o recibir cada persona del grupo para que todos hubiéramos pagado lo mismo y no tener deudas entre el grupo de amigos.
