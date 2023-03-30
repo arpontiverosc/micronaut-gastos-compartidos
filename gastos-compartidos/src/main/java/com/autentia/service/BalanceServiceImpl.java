@@ -2,10 +2,7 @@ package com.autentia.service;
 
 
 
-import com.autentia.domain.BalanceDto;
-import com.autentia.domain.BalanceSummaryDto;
-import com.autentia.domain.PaymentDto;
-import com.autentia.domain.TotalExpensePerUserDto;
+import com.autentia.domain.*;
 import com.autentia.exception.BadRequestException;
 import com.autentia.exception.BalanceNotFoundException;
 import com.autentia.exception.BalanceNotInformedException;
@@ -17,6 +14,7 @@ import com.autentia.repository.BalanceRepository;
 import com.autentia.repository.ExpenseRepository;
 import jakarta.inject.Singleton;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -40,6 +38,7 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
+    @Transactional
     public Balance findBalanceById(Long balanceId) {
         if(Objects.isNull(balanceId))
            throw new BalanceNotInformedException();
@@ -70,11 +69,11 @@ public class BalanceServiceImpl implements BalanceService {
 
     private List<TotalExpensePerUserDto> getTotalExpensesByUsers(Long groupId, Long balanceId){
 
-        List<Object[]>  expensesPerUser = expenseRepository.findTotalAmountByUser(groupId, balanceId);
+        List<UserExpenseSummary> expensesPerUser = expenseRepository.findTotalAmountByUser(groupId, balanceId);
 
         return expensesPerUser.stream()
-                .map(row -> new TotalExpensePerUserDto((Long) row[0], (BigDecimal) row[1]))
-                .collect(Collectors.toList());
+                .map(row -> new TotalExpensePerUserDto(row.getUserId(), row.getTotalAmount()))
+             .collect(Collectors.toList());
 
     }
     private List<BalanceDto> getBalanceDto(List<User> users,
@@ -156,6 +155,7 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
+    @Transactional
     public BalanceSummaryDto getBalancesByGroup(Long groupId, Long balanceId) {
 
        Balance balance = findBalanceById(balanceId);

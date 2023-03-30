@@ -45,6 +45,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public Group findGroupById(Long groupId){
         if(Objects.isNull(groupId))
             throw new GroupNotFoundException();
@@ -74,6 +75,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public List<UserDto> findUsersByGroup(Long groupId) {
         if(Objects.isNull(groupId))
             throw new BadRequestException();

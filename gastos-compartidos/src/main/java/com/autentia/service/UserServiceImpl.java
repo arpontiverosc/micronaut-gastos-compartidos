@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User findById(Long userId) {
         if(Objects.isNull(userId))
             throw new UserNotFoundException();
