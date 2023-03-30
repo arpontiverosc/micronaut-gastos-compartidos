@@ -1,53 +1,44 @@
 package com.autentia.controller;
 
-import com.autentia.model.User;
-import com.autentia.model.UserResponse;
-import com.autentia.service.UserService;
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Delete;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.PathVariable;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Put;
 
-import javax.validation.Valid;
+import com.autentia.domain.UserDto;
+import com.autentia.interfaces.GroupService;
+import com.autentia.interfaces.UserService;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.*;
+
+
 import java.util.List;
 
-@Controller("/api/users")
+@Controller
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
-    public UserController(UserService userService) {
+    private GroupService groupService;
+
+
+    public UserController(UserService userService, GroupService groupService) {
         this.userService = userService;
+        this.groupService = groupService;
     }
 
-    @Post
-    public HttpResponse<User> createUser(@Body @Valid User user) {
-        return HttpResponse.created(userService.createUser(user));
+    @Post("/users")
+    public HttpResponse<UserDto> createUSer(@Body UserDto user){
+
+        UserDto userCreated = userService.createUser(user);
+
+        return HttpResponse.ok(userCreated);
+
     }
 
-    @Get
-    public HttpResponse<List<User>> getAllUsers() {
-        return HttpResponse.ok(userService.getAllUsers());
-    }
+    @Get("/groups/{groupId}/users")
+    public HttpResponse<List<UserDto>> getUsersByGroup(@PathVariable Long groupId) {
 
-    @Get("/{id}")
-    public HttpResponse<UserResponse> getUser(@PathVariable int id) {
-        return HttpResponse.ok(userService.getUserDetails(id));
-    }
+        List<UserDto> groupUsers = groupService.findUsersByGroup(groupId);
 
-    @Put("/{id}")
-    public HttpResponse<User> updateUser(@PathVariable int id, @Body User user) {
-        return HttpResponse.ok(userService.updateUser(id, user));
-    }
+        return HttpResponse.ok(groupUsers);
 
-    @Delete("/{id}")
-    public HttpResponse<Void> deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
-        return HttpResponse.ok();
     }
 
 }

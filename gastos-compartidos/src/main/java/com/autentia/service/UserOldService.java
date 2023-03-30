@@ -1,23 +1,15 @@
 package com.autentia.service;
 
-import com.autentia.client.Preference;
-import com.autentia.client.PreferenceClient;
-import com.autentia.exception.UserNotFoundException;
-import com.autentia.model.User;
-import com.autentia.model.UserResponse;
-import com.autentia.repository.UserRepository;
 import jakarta.inject.Singleton;
 
-import java.util.List;
-import java.util.Optional;
-
 @Singleton
-public class UserService {
+public class UserOldService {
 
+/*
     private final UserRepository userRepository;
     private final PreferenceClient preferenceClient;
 
-    public UserService(UserRepository userRepository, PreferenceClient preferenceClient) {
+    public UserOldService(UserRepository userRepository, PreferenceClient preferenceClient) {
         this.userRepository = userRepository;
         this.preferenceClient = preferenceClient;
     }
@@ -61,6 +53,6 @@ public class UserService {
 
     public void deleteUser(int id) {
         userRepository.deleteById(id);
-    }
+    }*/
 
 }
