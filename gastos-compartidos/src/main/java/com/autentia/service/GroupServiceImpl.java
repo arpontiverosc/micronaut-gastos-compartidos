@@ -5,6 +5,7 @@ import com.autentia.domain.GroupUserDto;
 import com.autentia.domain.UserDto;
 import com.autentia.exception.BadRequestException;
 import com.autentia.exception.GroupNotFoundException;
+import com.autentia.exception.UserNotGroupException;
 import com.autentia.interfaces.GroupService;
 import com.autentia.interfaces.UserService;
 import com.autentia.mapper.GroupMapper;
@@ -89,5 +90,19 @@ public class GroupServiceImpl implements GroupService {
         return userMapper.convertEntitiesToDto(group.get().getUsers());
 
     }
+
+    @Override
+    @Transactional
+    public void checkUserIsPartOfTheGroup(Long groupId, Long userId) {
+
+        Optional<UserDto> user = findUsersByGroup(groupId)
+                .stream().filter(u -> u.getUserId().equals(userId))
+                .findFirst();
+
+        if (!user.isPresent()) {
+            throw new UserNotGroupException();
+        }
+    }
+
 
 }

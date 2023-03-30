@@ -2,6 +2,9 @@ package com.autentia.service;
 
 
 import com.autentia.domain.ExpenseDto;
+import com.autentia.domain.UserDto;
+import com.autentia.exception.BadRequestException;
+import com.autentia.exception.UserNotGroupException;
 import com.autentia.interfaces.BalanceService;
 import com.autentia.interfaces.ExpenseService;
 import com.autentia.interfaces.GroupService;
@@ -9,11 +12,13 @@ import com.autentia.interfaces.UserService;
 import com.autentia.mapper.ExpenseMapper;
 import com.autentia.model.Balance;
 import com.autentia.model.Expense;
+import com.autentia.model.User;
 import com.autentia.repository.ExpenseRepository;
 import jakarta.inject.Singleton;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class ExpenseServiceImpl implements ExpenseService {
@@ -56,6 +61,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     @Transactional
     public ExpenseDto addExpenseToGroupBalance(Long groupId, Long balanceId, ExpenseDto expenseDto) {
+
+        groupService.checkUserIsPartOfTheGroup(groupId, expenseDto.getUser().getUserId());
 
         Expense expenseEntity = expenseMapper.convertDtoToEntity(expenseDto);
 
