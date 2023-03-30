@@ -45,6 +45,9 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Transactional
     public List<ExpenseDto> getGroupExpensesByBalance(Long groupId, Long balanceId) {
 
+        balanceService.findBalanceById(balanceId);
+        groupService.findGroupById(groupId);
+
         List<Expense> expenses = expenseRepository.findByGroupIdAndBalanceIdOrderByExpenseDateDesc(groupId, balanceId);
 
         return expenseMapper.convertEntitiesToDto(expenses);

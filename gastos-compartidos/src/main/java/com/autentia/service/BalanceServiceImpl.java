@@ -7,6 +7,7 @@ import com.autentia.exception.BadRequestException;
 import com.autentia.exception.BalanceNotFoundException;
 import com.autentia.exception.BalanceNotInformedException;
 import com.autentia.interfaces.BalanceService;
+import com.autentia.interfaces.GroupService;
 import com.autentia.mapper.UserMapper;
 import com.autentia.model.Balance;
 import com.autentia.model.User;
@@ -29,11 +30,15 @@ public class BalanceServiceImpl implements BalanceService {
     private ExpenseRepository expenseRepository;
 
 
+    private GroupService groupService;
+
+
     private UserMapper userMapper;
 
-    public BalanceServiceImpl(BalanceRepository balanceRepository, ExpenseRepository expenseRepository, UserMapper userMapper) {
+    public BalanceServiceImpl(BalanceRepository balanceRepository, ExpenseRepository expenseRepository, GroupService groupService, UserMapper userMapper) {
         this.balanceRepository = balanceRepository;
         this.expenseRepository = expenseRepository;
+        this.groupService = groupService;
         this.userMapper = userMapper;
     }
 
@@ -52,6 +57,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public void checkBalanceOwnsGroup(Balance balance, Long groupId) {
+        groupService.findGroupById(groupId);
         if(!balance.getGroup().getId().equals(groupId)){
            throw new BadRequestException();
         }

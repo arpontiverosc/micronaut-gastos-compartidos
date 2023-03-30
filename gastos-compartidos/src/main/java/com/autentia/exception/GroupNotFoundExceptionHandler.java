@@ -7,11 +7,11 @@ import io.micronaut.http.server.exceptions.ExceptionHandler;
 import jakarta.inject.Singleton;
 
 @Singleton
-@Requires(classes = {BalanceNotInformedException.class, ExceptionHandler.class})
-public class GroupNotFoundExceptionHandler implements ExceptionHandler<BalanceNotInformedException, HttpResponse> {
+@Requires(classes = {GroupNotFoundException.class, ExceptionHandler.class})
+public class GroupNotFoundExceptionHandler implements ExceptionHandler<GroupNotFoundException, HttpResponse> {
 
     @Override
-    public HttpResponse handle(HttpRequest request, BalanceNotInformedException exception) {
+    public HttpResponse handle(HttpRequest request, GroupNotFoundException exception) {
         return HttpResponse.badRequest("Group Not Found.");
     }
 }
